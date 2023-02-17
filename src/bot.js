@@ -42,10 +42,10 @@ client.on('message', async message => {
 
   // Check if the message is a direct message to the bot
   if (message.content.startsWith(prefix + 'dm')) {
-    
+
     // Respond to the message
     message.reply(`I'll send you a direct message!`);
-    
+
     // Send a direct message to the user
     message.author.send(`Hi there! You triggered me in the server "${message.guild.name}"`)
       .catch(error => {
