@@ -55,23 +55,53 @@ client.on('message', async message => {
             });
     }
 
-    // Check if the message triggers the qr command
-    if (message.content.startsWith(prefix + 'qr ')) {
-        // Get the message to generate a QR code for
-        const qrMessage = message.content.slice(prefix.length + 3);
 
-        // Construct the URL to request the QR code from the API
-        const url = `https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${qrMessage}`;
-
-        // Send the QR code image as a message attachment
-        message.channel.send({
-            files: [{
-                attachment: url,
-                name: 'qrcode.png'
-            }]
-        });
-    }
 });
 
 
-client.login("OTM0MzM1OTQ5MDcxMDY5MTg0.GwWQCu.6wAV69c-yy0nu2cYH34vwcRA4N5GDQZZZrGKRc");
+
+// import the necessary libraries
+const express = require('express');
+const path = require('path');
+
+// create an express app
+const app = express();
+const port = 3000;
+
+// set the view engine to pug
+app.set('view engine', 'pug');
+
+// set the public directory for static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// render the index page
+app.get('/', function(req, res) {
+    // res.render('index', { title: 'Express.js', message: 'Hello world!' });
+    res.render('index');
+});
+
+app.get('/commands', (req, res) => res.render('commands', {
+    subtitle: 'Commands',
+    categories: [
+        { name: 'Auto Mode', icon: 'fa fa-gavel' },
+        { name: 'Economy', icon: 'fa fa-database' },
+        { name: 'General', icon: 'fa fa-star' },
+        { name: 'Music', icon: 'fa fa-music' }
+    ],
+    commands: [
+            { name: 'Auto Mode', icon: 'fa fa-gavel' },
+            { name: 'Economy', icon: 'fa fa-database' },
+            { name: 'General', icon: 'fa fa-star' },
+            { name: 'Music', icon: 'fa fa-music' }
+        ]
+        // commands: Array.from(commands.values()),
+        // commandsString: JSON.stringify(Array.from(commands.values()))
+}));
+
+// start the server
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
+});
+
+
+client.login("");
